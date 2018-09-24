@@ -15,7 +15,9 @@
 		8E915ABC2155A49200FE5605 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E915ABA2155A49200FE5605 /* LaunchScreen.storyboard */; };
 		8E915AC72155A49300FE5605 /* MicrophoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AC62155A49300FE5605 /* MicrophoneTests.swift */; };
 		8E915AD22155A49300FE5605 /* MicrophoneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AD12155A49300FE5605 /* MicrophoneUITests.swift */; };
-		8E915AE22155C76500FE5605 /* Toto_Africa.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8E915AE12155C76500FE5605 /* Toto_Africa.mp3 */; };
+		8EBA548E215891AB0030BE12 /* Toto_Africa.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8EBA548C215891AA0030BE12 /* Toto_Africa.mp3 */; };
+		8EBA548F215891AB0030BE12 /* EWF_September.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8EBA548D215891AA0030BE12 /* EWF_September.mp3 */; };
+		8EBA54912158995A0030BE12 /* TakeMeHome_JD.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8EBA54902158995A0030BE12 /* TakeMeHome_JD.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +52,9 @@
 		8E915ACD2155A49300FE5605 /* MicrophoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MicrophoneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E915AD12155A49300FE5605 /* MicrophoneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrophoneUITests.swift; sourceTree = "<group>"; };
 		8E915AD32155A49300FE5605 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8E915AE12155C76500FE5605 /* Toto_Africa.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Toto_Africa.mp3; path = ../../../../Toto_Africa.mp3; sourceTree = "<group>"; };
+		8EBA548C215891AA0030BE12 /* Toto_Africa.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Toto_Africa.mp3; path = ../../../../ios/Toto_Africa.mp3; sourceTree = "<group>"; };
+		8EBA548D215891AA0030BE12 /* EWF_September.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = EWF_September.mp3; path = ../../../../ios/EWF_September.mp3; sourceTree = "<group>"; };
+		8EBA54902158995A0030BE12 /* TakeMeHome_JD.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TakeMeHome_JD.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +105,9 @@
 		8E915AAD2155A49100FE5605 /* Microphone */ = {
 			isa = PBXGroup;
 			children = (
-				8E915AE12155C76500FE5605 /* Toto_Africa.mp3 */,
+				8EBA54902158995A0030BE12 /* TakeMeHome_JD.mp3 */,
+				8EBA548D215891AA0030BE12 /* EWF_September.mp3 */,
+				8EBA548C215891AA0030BE12 /* Toto_Africa.mp3 */,
 				8E915AAE2155A49100FE5605 /* AppDelegate.swift */,
 				8E915AB02155A49100FE5605 /* MainVC.swift */,
 				8E915AB22155A49100FE5605 /* Main.storyboard */,
@@ -199,6 +205,11 @@
 				TargetAttributes = {
 					8E915AAA2155A49100FE5605 = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					8E915AC12155A49300FE5605 = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -235,7 +246,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E915AE22155C76500FE5605 /* Toto_Africa.mp3 in Resources */,
+				8EBA548E215891AB0030BE12 /* Toto_Africa.mp3 in Resources */,
+				8EBA548F215891AB0030BE12 /* EWF_September.mp3 in Resources */,
+				8EBA54912158995A0030BE12 /* TakeMeHome_JD.mp3 in Resources */,
 				8E915ABC2155A49200FE5605 /* LaunchScreen.storyboard in Resources */,
 				8E915AB92155A49200FE5605 /* Assets.xcassets in Resources */,
 				8E915AB42155A49100FE5605 /* Main.storyboard in Resources */,

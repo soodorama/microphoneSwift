@@ -11,66 +11,77 @@ import AVFoundation
 
 class MainVC: UIViewController {
     
+    @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var recordButton: UIButton!
     
-    @IBOutlet weak var mainButton: UIButton!
     
     var isPlaying = false
-    var player: AVAudioPlayer?
-
+    var name = "TakeMeHome_JD"
+    var globalPlayer: AVAudioPlayer?
+    
+    let playColor = UIColor(red: 0/255, green: 143/255, blue: 36/255, alpha: 1.0)
+    let pauseColor = UIColor(red: 248/255, green: 149/255, blue: 18/255, alpha: 1.0)
+    let stopColor = UIColor(red: 142/255, green: 17/255, blue: 7/255, alpha: 1.0)
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        mainButton.layer.cornerRadius = 10
+        playButton.layer.cornerRadius = 10
+        stopButton.layer.cornerRadius = 10
+        recordButton.layer.cornerRadius = 10
+        
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else {
+            print("URL not found")
+            return
+        }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            globalPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    @IBAction func buttonPressed(_ sender: UIButton) {
-        if mainButton.titleLabel?.text == "Play" {
-            self.playSound()
+    @IBAction func playPressed(_ sender: UIButton) {
+        if !isPlaying {
+            globalPlayer?.play()
+            playButton.setTitle("Pause", for: .normal)
+            playButton.backgroundColor = pauseColor
+            stopButton.backgroundColor = stopColor
+            isPlaying = true
         }
         else {
-            self.stopSound()
+            globalPlayer?.pause()
+            playButton.setTitle("Resume", for: .normal)
+            playButton.backgroundColor = playColor
+            isPlaying = false
         }
     }
     
-    func playSound() {
-        guard let url = Bundle.main.url(forResource: "Toto_Africa", withExtension: "mp3") else {
-            print("URL not found")
-            return
-        }
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-            try AVAudioSession.sharedInstance().setActive(true)
-            
-            
-            
-            let player = try AVAudioPlayer(contentsOf: url)
-            
-            print("before play",player.isPlaying)
-            
-            player.play()
-            
-            print("play pressed")
-            print("after play",player.isPlaying)
-            mainButton.setTitle("Stop", for: .normal)
-            mainButton.backgroundColor = UIColor(red: 154/255, green: 2/255, blue: 7/255, alpha: 1.0)
-            
-        } catch let error {
-            print(error.localizedDescription)
-        }
+    @IBAction func stopPressed(_ sender: UIButton) {
+        stopButton.backgroundColor = .gray
+        globalPlayer?.stop()
+        globalPlayer?.currentTime = 0
+        playButton.setTitle("Play", for: .normal)
+        playButton.backgroundColor = playColor
+        isPlaying = false
     }
     
-    func stopSound() {
-        print("before stop",player?.isPlaying)
-        player?.stop()
-        print("stop pressed")
-        print("after stop", player?.isPlaying)
-        mainButton.setTitle("Play", for: .normal)
-        mainButton.backgroundColor = UIColor(red: 0/255, green: 143/255, blue: 36/255, alpha: 1.0)
+    @IBAction func recordPressed(_ sender: UIButton) {
+        print("country roadssss take me homeeee")
     }
+    
+    
     
 }
 
