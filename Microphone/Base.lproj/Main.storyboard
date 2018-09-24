@@ -18,8 +18,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Microphone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t96-oS-RoF">
+                                <rect key="frame" x="8" y="52" width="359" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcD-Zf-Hoe">
+                                <rect key="frame" x="97" y="225" width="180" height="100"/>
+                                <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="LOV-G0-7ac"/>
+                                    <constraint firstAttribute="width" constant="180" id="dTz-vO-Vih"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="playPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1bz-QK-RRd"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdM-Le-h1p">
-                                <rect key="frame" x="0.0" y="333.5" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="333" width="375" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="YTc-ee-gYv"/>
                                 </constraints>
@@ -42,30 +63,15 @@
                                     <action selector="stopPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Co3-GG-Pof"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcD-Zf-Hoe">
-                                <rect key="frame" x="97" y="225.5" width="180" height="100"/>
-                                <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="LOV-G0-7ac"/>
-                                    <constraint firstAttribute="width" constant="180" id="dTz-vO-Vih"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
-                                <state key="normal" title="Play">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="playPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1bz-QK-RRd"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8aX-dn-3uP">
-                                <rect key="frame" x="117" y="457.5" width="140" height="80"/>
+                                <rect key="frame" x="147" y="473.5" width="80" height="80"/>
                                 <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="jXn-bc-k0R"/>
-                                    <constraint firstAttribute="width" constant="140" id="nb3-DH-NLw"/>
+                                    <constraint firstAttribute="width" constant="80" id="nb3-DH-NLw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
-                                <state key="normal" title="Record">
+                                <state key="normal" backgroundImage="mic_labeled">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -78,10 +84,13 @@
                             <constraint firstItem="pdM-Le-h1p" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="A5F-f4-b5I"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pdM-Le-h1p" secondAttribute="trailing" id="OQY-H1-b4k"/>
                             <constraint firstItem="aVd-Wt-cZn" firstAttribute="top" secondItem="pdM-Le-h1p" secondAttribute="bottom" constant="8" id="QaT-0s-k3G"/>
+                            <constraint firstItem="t96-oS-RoF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="Rbc-Ki-VK0"/>
+                            <constraint firstItem="t96-oS-RoF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="TbN-gv-wGF"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t96-oS-RoF" secondAttribute="trailing" constant="8" id="UWv-uU-Gn2"/>
                             <constraint firstItem="8aX-dn-3uP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Wp3-tQ-TFN"/>
                             <constraint firstItem="BcD-Zf-Hoe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZY0-GJ-VKM"/>
                             <constraint firstItem="pdM-Le-h1p" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="c3f-Pv-9np"/>
-                            <constraint firstItem="8aX-dn-3uP" firstAttribute="top" secondItem="aVd-Wt-cZn" secondAttribute="bottom" constant="16" id="nvh-Pr-i2z"/>
+                            <constraint firstItem="8aX-dn-3uP" firstAttribute="top" secondItem="aVd-Wt-cZn" secondAttribute="bottom" constant="32" id="nvh-Pr-i2z"/>
                             <constraint firstItem="pdM-Le-h1p" firstAttribute="top" secondItem="BcD-Zf-Hoe" secondAttribute="bottom" constant="8" id="pU4-nt-aNG"/>
                             <constraint firstItem="aVd-Wt-cZn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="svk-Q1-7TK"/>
                         </constraints>
@@ -97,4 +106,7 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="mic_labeled" width="1050" height="1050"/>
+    </resources>
 </document>

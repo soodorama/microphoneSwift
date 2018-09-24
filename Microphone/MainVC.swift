@@ -19,6 +19,8 @@ class MainVC: UIViewController {
     var isPlaying = false
     var name = "TakeMeHome_JD"
     var globalPlayer: AVAudioPlayer?
+    var session: AVAudioSession?
+    var recorder: AVAudioRecorder?
     
     let playColor = UIColor(red: 0/255, green: 143/255, blue: 36/255, alpha: 1.0)
     let pauseColor = UIColor(red: 248/255, green: 149/255, blue: 18/255, alpha: 1.0)
@@ -36,9 +38,22 @@ class MainVC: UIViewController {
             return
         }
         
+        session = AVAudioSession.sharedInstance()
+        
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
-            try AVAudioSession.sharedInstance().setActive(true)
+//            try session?.setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
+            try session?.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            try session?.setActive(true)
+            
+            session?.requestRecordPermission() { [unowned self] allowed in
+                DispatchQueue.main.async {
+                    if allowed {
+                        self.loadRecordingUI()
+                    } else {
+                        self.loadFailUI()
+                    }
+                }
+            }
             
             globalPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
             
@@ -50,6 +65,14 @@ class MainVC: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func loadRecordingUI() {
+        print("LETS RECORD")
+    }
+    
+    func loadFailUI() {
+        print("FAIL")
     }
 
     @IBAction func playPressed(_ sender: UIButton) {
