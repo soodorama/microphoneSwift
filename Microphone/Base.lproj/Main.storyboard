@@ -100,13 +100,70 @@
                         <outlet property="playButton" destination="BcD-Zf-Hoe" id="1Nf-Qb-qlH"/>
                         <outlet property="recordButton" destination="8aX-dn-3uP" id="Rcb-OO-knc"/>
                         <outlet property="stopButton" destination="aVd-Wt-cZn" id="7m9-ZU-ktm"/>
+                        <segue destination="yry-pK-glB" kind="presentation" identifier="MicSegue" id="Cne-vC-rz4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--MicVC-->
+        <scene sceneID="lgw-n3-9lq">
+            <objects>
+                <viewController id="yry-pK-glB" customClass="MicVC" customModule="Microphone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dUx-xg-Hcp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mic_labeled" translatesAutoresizingMaskIntoConstraints="NO" id="4jr-m4-E4m">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I4p-RQ-req">
+                                <rect key="frame" x="0.0" y="333" width="375" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="qr5-1D-prm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dT3-jc-HDe">
+                                <rect key="frame" x="157.5" y="441" width="60" height="121"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="121" id="kCI-yR-82g"/>
+                                    <constraint firstAttribute="width" constant="60" id="ylm-xg-eCz"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="resize_white_switch"/>
+                                <connections>
+                                    <action selector="switchPressed:" destination="yry-pK-glB" eventType="touchUpInside" id="EnS-Bm-bQp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="I4p-RQ-req" firstAttribute="centerX" secondItem="dUx-xg-Hcp" secondAttribute="centerX" id="4ZC-al-OIz"/>
+                            <constraint firstItem="j70-zz-SNy" firstAttribute="trailing" secondItem="I4p-RQ-req" secondAttribute="trailing" id="81y-Qc-nQK"/>
+                            <constraint firstItem="4jr-m4-E4m" firstAttribute="leading" secondItem="j70-zz-SNy" secondAttribute="leading" id="C7q-54-mEN"/>
+                            <constraint firstItem="dT3-jc-HDe" firstAttribute="centerX" secondItem="dUx-xg-Hcp" secondAttribute="centerX" id="FFZ-dp-FHt"/>
+                            <constraint firstItem="j70-zz-SNy" firstAttribute="trailing" secondItem="4jr-m4-E4m" secondAttribute="trailing" id="Lh1-Xf-Ybk"/>
+                            <constraint firstItem="I4p-RQ-req" firstAttribute="centerY" secondItem="dUx-xg-Hcp" secondAttribute="centerY" id="Tks-3d-VtE"/>
+                            <constraint firstItem="dT3-jc-HDe" firstAttribute="top" secondItem="I4p-RQ-req" secondAttribute="bottom" constant="108" id="Uyi-11-en6"/>
+                            <constraint firstItem="j70-zz-SNy" firstAttribute="bottom" secondItem="4jr-m4-E4m" secondAttribute="bottom" id="bHM-F0-OgP"/>
+                            <constraint firstItem="4jr-m4-E4m" firstAttribute="top" secondItem="j70-zz-SNy" secondAttribute="top" id="vOQ-yR-64i"/>
+                            <constraint firstItem="I4p-RQ-req" firstAttribute="leading" secondItem="j70-zz-SNy" secondAttribute="leading" id="yJv-Uu-T1r"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="j70-zz-SNy"/>
+                    </view>
+                    <connections>
+                        <outlet property="switchButton" destination="dT3-jc-HDe" id="Re5-OS-2NQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wdI-7m-CKs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="991" y="39"/>
+        </scene>
     </scenes>
     <resources>
         <image name="mic_labeled" width="1050" height="1050"/>
+        <image name="resize_white_switch" width="60" height="121"/>
     </resources>
 </document>
