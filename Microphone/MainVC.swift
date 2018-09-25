@@ -82,18 +82,27 @@ class MainVC: UIViewController {
     }
     
     class func getAudioURL() -> URL {
-        
+//        print(getDocumentsDirectory())
         return getDocumentsDirectory().appendingPathComponent("audio.m4a")
     }
     
 
     @IBAction func playPressed(_ sender: UIButton) {
         if !isPlaying {
-            globalPlayer?.play()
-            playButton.setTitle("Pause", for: .normal)
-            playButton.backgroundColor = pauseColor
-            stopButton.backgroundColor = stopColor
-            isPlaying = true
+            let url = MainVC.getAudioURL()
+        
+            do {
+                globalPlayer = try AVAudioPlayer(contentsOf: url)
+                globalPlayer?.play()
+                playButton.setTitle("Pause", for: .normal)
+                playButton.backgroundColor = pauseColor
+                stopButton.backgroundColor = stopColor
+                isPlaying = true
+            } catch {
+                let ac = UIAlertController(title: "Playback failed", message: "There was a problem", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true)
+            }
         }
         else {
             globalPlayer?.pause()
@@ -113,7 +122,6 @@ class MainVC: UIViewController {
     }
     
     @IBAction func recordPressed(_ sender: UIButton) {
-        print("country roadssss take me homeeee")
         if recorder == nil {
             startRecording()
         } else {
