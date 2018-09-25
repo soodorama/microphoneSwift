@@ -74,6 +74,18 @@ class MainVC: UIViewController {
     func loadFailUI() {
         print("FAIL")
     }
+    
+    class func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
+    
+    class func getAudioURL() -> URL {
+        
+        return getDocumentsDirectory().appendingPathComponent("audio.m4a")
+    }
+    
 
     @IBAction func playPressed(_ sender: UIButton) {
         if !isPlaying {
@@ -102,9 +114,70 @@ class MainVC: UIViewController {
     
     @IBAction func recordPressed(_ sender: UIButton) {
         print("country roadssss take me homeeee")
+        if recorder == nil {
+            startRecording()
+        } else {
+            finishRecording(success: true)
+        }
     }
     
     
     
 }
+
+extension MainVC: AVAudioRecorderDelegate {
+    func startRecording() {
+        // 1
+        recordButton.backgroundColor = UIColor(red: 153/255, green: 0/255, blue: 0/255, alpha: 1)
+        
+        // 2
+        recordButton.backgroundColor = .red
+        
+        // 3
+        let audioURL =  MainVC.getAudioURL()
+        print(audioURL.absoluteString)
+        
+        // 4
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+        
+        do {
+            // 5
+            recorder = try AVAudioRecorder(url: audioURL, settings: settings)
+            recorder?.delegate = self
+            recorder?.record()
+        } catch {
+            finishRecording(success: false)
+        }
+    }
+    
+    func finishRecording(success: Bool) {
+        recordButton.backgroundColor = UIColor(red: 0/255, green: 153/255, blue: 0/255, alpha: 1)
+        
+        recorder?.stop()
+        recorder = nil
+        
+        if success {
+            recordButton.backgroundColor = .green
+//            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextTapped))
+        } else {
+            recordButton.backgroundColor = .brown
+            
+            let ac = UIAlertController(title: "Record failed", message: "There was a problem recording your whistle; please try again.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if !flag {
+            finishRecording(success: false)
+        }
+    }
+}
+
 
