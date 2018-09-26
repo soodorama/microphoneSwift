@@ -16,6 +16,7 @@ class MicVC: UIViewController, AVCaptureAudioDataOutputSampleBufferDelegate {
     
 //    var isSwitched = false
     let onColor = UIColor(red: 142/255, green: 17/255, blue: 7/255, alpha: 1.0)
+//    var player: AVAudioPlayer?
     
     
     let settings = [
@@ -47,12 +48,8 @@ class MicVC: UIViewController, AVCaptureAudioDataOutputSampleBufferDelegate {
                        didOutput sampleBuffer: CMSampleBuffer,
                        from connection: AVCaptureConnection) {
         output.connection(with: AVMediaType(rawValue: AVAudioSessionPortBuiltInSpeaker))
-        
+//        print("why can't i figure this ish out")
         print("Audio data received")
-        
-//        audioOutput = output as? AVCaptureAudioDataOutput
-//        audioOutput?.connection(with: .audio)
-       
     }
     
     @IBAction func stopPressed(_ sender: UIButton) {
@@ -60,7 +57,7 @@ class MicVC: UIViewController, AVCaptureAudioDataOutputSampleBufferDelegate {
         offButton.backgroundColor = .gray
         
         captureSession.stopRunning()
-        print("stop")
+        print("Stop")
     }
     
     @IBAction func onPressed(_ sender: UIButton) {
