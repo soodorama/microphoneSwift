@@ -29,7 +29,7 @@
                                     <constraint firstAttribute="height" constant="60" id="Vja-uH-W4G"/>
                                 </constraints>
                                 <connections>
-                                    <action selector="stopPressed:" destination="yry-pK-glB" eventType="touchUpInside" id="bPy-yP-FFt"/>
+                                    <action selector="offPressed:" destination="yry-pK-glB" eventType="touchUpInside" id="zfZ-mr-EEs"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dT3-jc-HDe">
