@@ -31,6 +31,7 @@ class MicVC: UIViewController, AVCaptureAudioDataOutputSampleBufferDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        captureSession.automaticallyConfiguresApplicationAudioSession = false
         onButton.backgroundColor = .orange
         offButton.backgroundColor = .gray
         
