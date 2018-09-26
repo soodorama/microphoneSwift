@@ -9,16 +9,13 @@
 /* Begin PBXBuildFile section */
 		8E7032E6215A18AE00217522 /* MicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7032E5215A18AE00217522 /* MicVC.swift */; };
 		8E915AAF2155A49100FE5605 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AAE2155A49100FE5605 /* AppDelegate.swift */; };
-		8E915AB12155A49100FE5605 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AB02155A49100FE5605 /* MainVC.swift */; };
+		8E915AB12155A49100FE5605 /* RecordToFilePlayFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AB02155A49100FE5605 /* RecordToFilePlayFromFile.swift */; };
 		8E915AB42155A49100FE5605 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E915AB22155A49100FE5605 /* Main.storyboard */; };
 		8E915AB72155A49100FE5605 /* Microphone.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AB52155A49100FE5605 /* Microphone.xcdatamodeld */; };
 		8E915AB92155A49200FE5605 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E915AB82155A49200FE5605 /* Assets.xcassets */; };
 		8E915ABC2155A49200FE5605 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E915ABA2155A49200FE5605 /* LaunchScreen.storyboard */; };
 		8E915AC72155A49300FE5605 /* MicrophoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AC62155A49300FE5605 /* MicrophoneTests.swift */; };
 		8E915AD22155A49300FE5605 /* MicrophoneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AD12155A49300FE5605 /* MicrophoneUITests.swift */; };
-		8EBA548E215891AB0030BE12 /* Toto_Africa.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8EBA548C215891AA0030BE12 /* Toto_Africa.mp3 */; };
-		8EBA548F215891AB0030BE12 /* EWF_September.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8EBA548D215891AA0030BE12 /* EWF_September.mp3 */; };
-		8EBA54912158995A0030BE12 /* TakeMeHome_JD.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8EBA54902158995A0030BE12 /* TakeMeHome_JD.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +39,7 @@
 		8E7032E5215A18AE00217522 /* MicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicVC.swift; sourceTree = "<group>"; };
 		8E915AAB2155A49100FE5605 /* Microphone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Microphone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E915AAE2155A49100FE5605 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8E915AB02155A49100FE5605 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		8E915AB02155A49100FE5605 /* RecordToFilePlayFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordToFilePlayFromFile.swift; sourceTree = "<group>"; };
 		8E915AB32155A49100FE5605 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8E915AB62155A49100FE5605 /* Microphone.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Microphone.xcdatamodel; sourceTree = "<group>"; };
 		8E915AB82155A49200FE5605 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,9 +51,6 @@
 		8E915ACD2155A49300FE5605 /* MicrophoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MicrophoneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E915AD12155A49300FE5605 /* MicrophoneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrophoneUITests.swift; sourceTree = "<group>"; };
 		8E915AD32155A49300FE5605 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8EBA548C215891AA0030BE12 /* Toto_Africa.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Toto_Africa.mp3; path = ../../../../ios/Toto_Africa.mp3; sourceTree = "<group>"; };
-		8EBA548D215891AA0030BE12 /* EWF_September.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = EWF_September.mp3; path = ../../../../ios/EWF_September.mp3; sourceTree = "<group>"; };
-		8EBA54902158995A0030BE12 /* TakeMeHome_JD.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TakeMeHome_JD.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,11 +101,8 @@
 		8E915AAD2155A49100FE5605 /* Microphone */ = {
 			isa = PBXGroup;
 			children = (
-				8EBA54902158995A0030BE12 /* TakeMeHome_JD.mp3 */,
-				8EBA548D215891AA0030BE12 /* EWF_September.mp3 */,
-				8EBA548C215891AA0030BE12 /* Toto_Africa.mp3 */,
 				8E915AAE2155A49100FE5605 /* AppDelegate.swift */,
-				8E915AB02155A49100FE5605 /* MainVC.swift */,
+				8E915AB02155A49100FE5605 /* RecordToFilePlayFromFile.swift */,
 				8E915AB22155A49100FE5605 /* Main.storyboard */,
 				8E7032E5215A18AE00217522 /* MicVC.swift */,
 				8E915AB82155A49200FE5605 /* Assets.xcassets */,
@@ -249,9 +240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EBA548E215891AB0030BE12 /* Toto_Africa.mp3 in Resources */,
-				8EBA548F215891AB0030BE12 /* EWF_September.mp3 in Resources */,
-				8EBA54912158995A0030BE12 /* TakeMeHome_JD.mp3 in Resources */,
 				8E915ABC2155A49200FE5605 /* LaunchScreen.storyboard in Resources */,
 				8E915AB92155A49200FE5605 /* Assets.xcassets in Resources */,
 				8E915AB42155A49100FE5605 /* Main.storyboard in Resources */,
@@ -281,7 +269,7 @@
 			files = (
 				8E7032E6215A18AE00217522 /* MicVC.swift in Sources */,
 				8E915AB72155A49100FE5605 /* Microphone.xcdatamodeld in Sources */,
-				8E915AB12155A49100FE5605 /* MainVC.swift in Sources */,
+				8E915AB12155A49100FE5605 /* RecordToFilePlayFromFile.swift in Sources */,
 				8E915AAF2155A49100FE5605 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
