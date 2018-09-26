@@ -122,12 +122,12 @@ class MainVC: UIViewController {
     }
     
     @IBAction func recordPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "MicSegue", sender: sender)
-//        if recorder == nil {
-//            startRecording()
-//        } else {
-//            finishRecording(success: true)
-//        }
+//        performSegue(withIdentifier: "MicSegue", sender: sender)
+        if recorder == nil {
+            startRecording()
+        } else {
+            finishRecording(success: true)
+        }
     }
     
     
