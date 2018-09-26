@@ -16,6 +16,10 @@ class MicVC: UIViewController {
     
     let onColor = UIColor(red: 142/255, green: 17/255, blue: 7/255, alpha: 1.0)
     
+    var audioSession: AVAudioSession?
+    var iphoneInput: AVAudioSessionPortDescription = AVAudioSession.sharedInstance().availableInputs?[0] as! AVAudioSessionPortDescription
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         onButton.backgroundColor = .orange
@@ -23,23 +27,30 @@ class MicVC: UIViewController {
         onButton.layer.cornerRadius = 10
         offButton.layer.cornerRadius = 10
         
-        let audioSession = AVAudioSession.sharedInstance()
+        audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try audioSession?.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
+            try audioSession?.setActive(true)
+            
         } catch {
             print("Setting category to AVAudioSessionCategoryPlayback failed.")
         }
-        
-        print("Inputs",audioSession.availableInputs)
-        print("input datasource",audioSession.inputDataSource)
-        print("output datasource",audioSession.outputDataSource)
-        
     }
     
     @IBAction func onPressed(_ sender: UIButton) {
         onButton.backgroundColor = .white
         offButton.backgroundColor = onColor
         print("On")
+        
+        do {
+//            try audioSession?.overrideOutputAudioPort(.speaker)
+            try audioSession?.setPreferredIOBufferDuration(0.005)
+            try audioSession?.setPreferredInput(iphoneInput)
+            print(audioSession?.preferredInput)
+        } catch {
+            print("Error overriding speaker")
+        }
+        
     }
     
     @IBAction func offPressed(_ sender: UIButton) {
