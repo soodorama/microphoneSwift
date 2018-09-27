@@ -76,16 +76,13 @@ class MicVC: UIViewController {
     
     let onColor = UIColor(red: 142/255, green: 17/255, blue: 7/255, alpha: 1.0)
     
-    var audioSession: AVAudioSession?
-    var iphoneInput: AVAudioSessionPortDescription = AVAudioSession.sharedInstance().availableInputs![0]
-
-    
-    var audioQueue: AQ<String>?
-//    
-//    var isPlaying = false
+    var isPlaying = false
 //    var urlStr = ""
-//    var globalPlayer: AVAudioPlayer?
-//    var recorder: AVAudioRecorder?
+    var globalPlayer: AVAudioPlayer?
+    var recorder: AVAudioRecorder?
+    var session: AVAudioSession?
+    var audioQueue: AQ<String>?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +91,34 @@ class MicVC: UIViewController {
         onButton.layer.cornerRadius = 10
         offButton.layer.cornerRadius = 10
         
+//        guard let url = Bundle.main.url(forResource: urlStr, withExtension: "mp3") else {
+//            print("URL not found")
+//            return
+//        }
+//
+//        session = AVAudioSession.sharedInstance()
+//
+//        do {
+//            try session?.setCategory(AVAudioSessionCategoryPlayAndRecord)
+//            try session?.setActive(true)
+//
+//            session?.requestRecordPermission() { [unowned self] allowed in
+//                DispatchQueue.main.async {
+//                    if allowed {
+//                        self.loadRecordingUI()
+//                    } else {
+//                        self.loadFailUI()
+//                    }
+//                }
+//            }
+//
+//            globalPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+//
+//
+//        } catch let error {
+//            print(error.localizedDescription)
+//        }
+        
         print("Loaded")
     }
     
@@ -101,20 +126,8 @@ class MicVC: UIViewController {
         onButton.backgroundColor = .white
         offButton.backgroundColor = onColor
         print("On")
-        
-        audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession?.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
-            try audioSession?.setActive(true)
-            
-            try audioSession?.setPreferredIOBufferDuration(0.005)
-            try audioSession?.setPreferredInput(iphoneInput)
-            try audioSession?.setPreferredSampleRate(44100)
-            
-            
-        } catch {
-            print("ERROR")
-        }
+        isPlaying = true
+        startRecording()
         
     }
     
@@ -122,10 +135,91 @@ class MicVC: UIViewController {
         onButton.backgroundColor = .orange
         offButton.backgroundColor = .gray
         print("Off")
-        do {
-            try audioSession?.setActive(false)
-        } catch {
-            print("Error turning off audio session")
+        finishRecording(success: true)
+        isPlaying = false
+        globalPlayer?.stop()
+    }
+    
+    func loadRecordingUI() {
+        print("LETS RECORD")
+    }
+    
+    func loadFailUI() {
+        print("FAIL")
+    }
+    
+    class func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
+    
+    class func getAudioURL(urlStr: String) -> URL {
+        //        print(getDocumentsDirectory())
+        return getDocumentsDirectory().appendingPathComponent(urlStr)
+    }
+}
+
+
+extension MicVC: AVAudioRecorderDelegate {
+    func startRecording() {
+        var name = 0
+        
+        while isPlaying {
+            let audioURL = MicVC.getAudioURL(urlStr: String(name))
+            print(audioURL.absoluteString)
+            
+            let settings = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 12000,
+                AVNumberOfChannelsKey: 1,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            ]
+            
+            audioQueue?.enqueue(String(name))
+            name += 1
+            
+            do {
+                recorder = try AVAudioRecorder(url: audioURL, settings: settings)
+                recorder?.delegate = self
+                recorder?.record(forDuration: 1)
+            } catch {
+                isPlaying = false
+                finishRecording(success: false)
+            }
+            
+            let url = MicVC.getAudioURL(urlStr: (audioQueue?.dequeue())!)
+            
+            do {
+                globalPlayer = try AVAudioPlayer(contentsOf: url)
+                globalPlayer?.play()
+                print("playing?")
+            } catch {
+                let ac = UIAlertController(title: "Playback failed", message: "There was a problem", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true)
+            }
+        }
+        
+    }
+    
+    func finishRecording(success: Bool) {
+        isPlaying = false
+        recorder?.stop()
+        recorder = nil
+        
+        if success {
+            print("COOL")
+        } else {
+            let ac = UIAlertController(title: "Record failed", message: "There was a problem recording your whistle; please try again.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if !flag {
+            finishRecording(success: false)
         }
     }
 }
