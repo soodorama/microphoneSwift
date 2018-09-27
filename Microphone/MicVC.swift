@@ -41,8 +41,15 @@ class MicVC: UIViewController {
             offButton.backgroundColor = onColor
             print("On")
             isPlaying = true
-            startRecording()
             isOn = true
+            
+            let queue = DispatchQueue(label: "RecordAndPlay", qos: .default, attributes: .concurrent)
+            queue.async {
+                self.startRecording()
+            }
+            queue.async {
+                self.startPlaying()
+            }
         }
     }
     
@@ -78,72 +85,89 @@ class MicVC: UIViewController {
 
 
 extension MicVC: AVAudioRecorderDelegate {
-    func startRecording() {
-        
-        while isPlaying {
-            print("loop")
-            let urlStr = String(url_counter)
-            let audioURL = MicVC.getAudioURL(urlStr: urlStr+".m4a")
-            print(audioURL.absoluteString)
-            
-            session = AVAudioSession.sharedInstance()
-            
-            do {
-                try session?.setCategory(AVAudioSessionCategoryPlayAndRecord)
-                try session?.setActive(true)
+    func startPlaying() {
+        while isOn {
+            if let str = audioQueue.dequeue() {
+                audioQueue.show()
+                let url = MicVC.getAudioURL(urlStr: str)
+                let urlStr = str
                 
-                session?.requestRecordPermission() { [unowned self] allowed in
-                    DispatchQueue.main.async {
-                        if allowed {
-                            self.loadRecordingUI()
-                        } else {
-                            self.loadFailUI()
-                        }
+                do {
+                    guard let first_url = Bundle.main.url(forResource: urlStr, withExtension: "m4a") else {
+                        print("URL not found")
+                        return
                     }
+                    globalPlayer = try AVAudioPlayer(contentsOf: first_url, fileTypeHint: AVFileType.m4a.rawValue)
+                    
+                    globalPlayer = try AVAudioPlayer(contentsOf: url)
+                    globalPlayer?.play()
+                    print("playing?")
+                    do {
+                        try FileManager.default.removeItem(atPath: urlStr)
+                    } catch {
+                        print("error deleting file")
+                    }
+                    
+
+                } catch {
+                    let ac = UIAlertController(title: "Playback failed", message: "There was a problem", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+                    present(ac, animated: true)
                 }
-                
-            } catch let error {
-                print(error.localizedDescription)
-            }
-            
-            let settings = [
-                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                AVSampleRateKey: 12000,
-                AVNumberOfChannelsKey: 1,
-                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-            ]
-            
-            audioQueue.enqueue(urlStr)
-            url_counter += 1
-            
-            do {
-                recorder = try AVAudioRecorder(url: audioURL, settings: settings)
-                recorder?.delegate = self
-                recorder?.record(forDuration: 1)
-            } catch {
-                isPlaying = false
-                finishRecording(success: false)
-            }
-            audioQueue.show()
-            let url = MicVC.getAudioURL(urlStr: (audioQueue.dequeue())!)
-            
-            do {
-                guard let first_url = Bundle.main.url(forResource: urlStr, withExtension: "m4a") else {
-                    print("URL not found")
-                    return
-                }
-                globalPlayer = try AVAudioPlayer(contentsOf: first_url, fileTypeHint: AVFileType.m4a.rawValue)
-                
-                globalPlayer = try AVAudioPlayer(contentsOf: url)
-                globalPlayer?.play()
-                print("playing?")
-            } catch {
-                let ac = UIAlertController(title: "Playback failed", message: "There was a problem", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                present(ac, animated: true)
             }
         }
         
+    }
+    
+    func startRecording() {
+        while self.isOn {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                print("loop")
+                let urlStr = String(self.url_counter)
+                let audioURL = MicVC.getAudioURL(urlStr: urlStr+".m4a")
+                print(audioURL.absoluteString)
+                
+                self.session = AVAudioSession.sharedInstance()
+                
+                do {
+                    try self.session?.setCategory(AVAudioSessionCategoryPlayAndRecord)
+                    try self.session?.setActive(true)
+                    
+                    self.session?.requestRecordPermission() { [unowned self] allowed in
+                        DispatchQueue.main.async {
+                            if allowed {
+                                self.loadRecordingUI()
+                            } else {
+                                self.loadFailUI()
+                            }
+                        }
+                    }
+                    
+                } catch let error {
+                    print(error.localizedDescription)
+                }
+                
+                let settings = [
+                    AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                    AVSampleRateKey: 12000,
+                    AVNumberOfChannelsKey: 1,
+                    AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+                ]
+                
+                self.audioQueue.enqueue(urlStr)
+                self.url_counter += 1
+                
+                do {
+                    self.recorder = try AVAudioRecorder(url: audioURL, settings: settings)
+                    self.recorder?.delegate = self
+                    self.recorder?.record(forDuration: 1)
+                } catch {
+                    self.isPlaying = false
+                    self.finishRecording(success: false)
+                }
+                
+            }
+        }
     }
     
     func finishRecording(success: Bool) {
