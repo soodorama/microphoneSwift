@@ -25,11 +25,11 @@ class MicVC: UIViewController {
     var audioQueue: AQ<String> = AQ<String>()
     var recordTimer = Timer()
     var playTimer = Timer()
-    let delay = 1.0
+    let delay = 0.5
     
     let settings = [
         AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-        AVSampleRateKey: 12000,
+        AVSampleRateKey: 44100,
         AVNumberOfChannelsKey: 1,
         AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
     ]
@@ -45,7 +45,7 @@ class MicVC: UIViewController {
         session = AVAudioSession.sharedInstance()
 
         do {
-            try session?.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            try session?.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.allowBluetoothA2DP)
             try session?.setActive(true)
             
             session?.requestRecordPermission() { [unowned self] allowed in
@@ -72,7 +72,9 @@ class MicVC: UIViewController {
             onButton.backgroundColor = .white
             offButton.backgroundColor = onColor
             recordTimer = Timer.scheduledTimer(timeInterval: self.delay, target: self, selector: #selector(self.recordAudio), userInfo: nil, repeats: true)
-            playTimer = Timer.scheduledTimer(timeInterval: self.delay, target: self, selector: #selector(self.playAudio), userInfo: nil, repeats: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                self.playTimer = Timer.scheduledTimer(timeInterval: self.delay, target: self, selector: #selector(self.playAudio), userInfo: nil, repeats: true)
+            }
         }
     }
     
@@ -107,7 +109,7 @@ class MicVC: UIViewController {
     }
     
     class func getAudioURL(urlStr: String) -> URL {
-        return getDocumentsDirectory().appendingPathComponent(urlStr)
+        return getDocumentsDirectory().appendingPathComponent(urlStr+".m4a")
     }
 }
 
@@ -116,6 +118,25 @@ extension MicVC: AVAudioRecorderDelegate {
     @objc func playAudio() {
         print("Play")
         
+        let str = audioQueue.dequeue()
+        let url = MicVC.getAudioURL(urlStr: str!)
+        
+        do {
+            globalPlayer = try AVAudioPlayer(contentsOf: url)
+            globalPlayer?.play()
+            print("Playing")
+            do {
+                try FileManager.default.removeItem(at: url)
+            } catch {
+                print("error deleting file")
+            }
+            
+        } catch {
+            print("Error with player")
+            let ac = UIAlertController(title: "Playback failed", message: "There was a problem", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+        }
         
     }
     
@@ -127,7 +148,7 @@ extension MicVC: AVAudioRecorderDelegate {
         }
         
         let urlStr = String(self.url_counter)
-        let audioURL = MicVC.getAudioURL(urlStr: urlStr+".m4a")
+        let audioURL = MicVC.getAudioURL(urlStr: urlStr)
 //        print(audioURL.absoluteString)
         
         
