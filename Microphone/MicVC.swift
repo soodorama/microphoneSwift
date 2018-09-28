@@ -50,7 +50,7 @@ class MicVC: UIViewController {
         do {
             try session?.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.allowBluetoothA2DP)
             try session?.setActive(true)
-            try session?.setInputGain(0.05)
+            try session?.setInputGain(0.2)
             
             session?.requestRecordPermission() { [unowned self] allowed in
                 DispatchQueue.main.async {
@@ -148,8 +148,13 @@ extension MicVC: AVAudioRecorderDelegate {
         do {
             print("hi")
             beatPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            if name == "country_roads" {
+                beatPlayer?.volume = 0.3
+            }
+            else {
+                beatPlayer?.volume = 0.1
+            }
             beatPlayer?.play()
-            beatPlayer?.volume = 0.1
         } catch {
             print("\(error)")
         }

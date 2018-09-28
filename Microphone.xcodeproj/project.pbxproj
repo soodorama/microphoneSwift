@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8E5F4AEF215ED26E00FB828B /* still_dre.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8E5F4AED215ED26E00FB828B /* still_dre.mp3 */; };
 		8E5F4AF0215ED26E00FB828B /* pop_beats.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8E5F4AEE215ED26E00FB828B /* pop_beats.mp3 */; };
+		8E5F4AF2215ED9DE00FB828B /* country_roads.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8E5F4AF1215ED9DE00FB828B /* country_roads.mp3 */; };
 		8E7032E6215A18AE00217522 /* MicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7032E5215A18AE00217522 /* MicVC.swift */; };
 		8E915AAF2155A49100FE5605 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AAE2155A49100FE5605 /* AppDelegate.swift */; };
 		8E915AB12155A49100FE5605 /* RecordToFilePlayFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E915AB02155A49100FE5605 /* RecordToFilePlayFromFile.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		8E5F4AED215ED26E00FB828B /* still_dre.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = still_dre.mp3; sourceTree = "<group>"; };
 		8E5F4AEE215ED26E00FB828B /* pop_beats.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pop_beats.mp3; sourceTree = "<group>"; };
+		8E5F4AF1215ED9DE00FB828B /* country_roads.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = country_roads.mp3; sourceTree = "<group>"; };
 		8E7032E5215A18AE00217522 /* MicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicVC.swift; sourceTree = "<group>"; };
 		8E915AAB2155A49100FE5605 /* Microphone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Microphone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E915AAE2155A49100FE5605 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			children = (
 				8E5F4AEE215ED26E00FB828B /* pop_beats.mp3 */,
 				8E5F4AED215ED26E00FB828B /* still_dre.mp3 */,
+				8E5F4AF1215ED9DE00FB828B /* country_roads.mp3 */,
 				8E915AAE2155A49100FE5605 /* AppDelegate.swift */,
 				8E915AB02155A49100FE5605 /* RecordToFilePlayFromFile.swift */,
 				8E915AB22155A49100FE5605 /* Main.storyboard */,
@@ -247,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E915ABC2155A49200FE5605 /* LaunchScreen.storyboard in Resources */,
+				8E5F4AF2215ED9DE00FB828B /* country_roads.mp3 in Resources */,
 				8E5F4AEF215ED26E00FB828B /* still_dre.mp3 in Resources */,
 				8E5F4AF0215ED26E00FB828B /* pop_beats.mp3 in Resources */,
 				8E915AB92155A49200FE5605 /* Assets.xcassets in Resources */,
