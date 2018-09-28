@@ -26,6 +26,9 @@ class MicVC: UIViewController {
     var recordTimer = Timer()
     var playTimer = Timer()
     let delay = 0.2
+    var isBeating = false
+    
+    var beatPlayer: AVAudioPlayer?
     
     let settings = [
         AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -47,6 +50,7 @@ class MicVC: UIViewController {
         do {
             try session?.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.allowBluetoothA2DP)
             try session?.setActive(true)
+            try session?.setInputGain(0.05)
             
             session?.requestRecordPermission() { [unowned self] allowed in
                 DispatchQueue.main.async {
@@ -62,12 +66,12 @@ class MicVC: UIViewController {
             print(error.localizedDescription)
         }
         
-        print("View Did Load")
+//        print("View Did Load")
     }
     
     @IBAction func onPressed(_ sender: UIButton) {
         if !isOn {
-            print("On")
+//            print("On")
             isOn = true
             onButton.backgroundColor = .white
             offButton.backgroundColor = onColor
@@ -80,8 +84,9 @@ class MicVC: UIViewController {
     
     @IBAction func offPressed(_ sender: UIButton) {
         if isOn {
-            print("Off")
+//            print("Off")
             isOn = false
+            isBeating = false
             
             onButton.backgroundColor = .orange
             offButton.backgroundColor = .gray
@@ -90,16 +95,17 @@ class MicVC: UIViewController {
             playTimer.invalidate()
             
             finishRecording(success: true)
-//            globalPlayer?.stop()
+            globalPlayer?.stop()
+            beatPlayer?.stop()
         }
     }
     
     func loadRecordingUI() {
-        print("LETS RECORD")
+//        print("LETS RECORD")
     }
     
     func loadFailUI() {
-        print("FAIL")
+//        print("FAIL")
     }
     
     class func getDocumentsDirectory() -> URL {
@@ -111,12 +117,46 @@ class MicVC: UIViewController {
     class func getAudioURL(urlStr: String) -> URL {
         return getDocumentsDirectory().appendingPathComponent(urlStr+".m4a")
     }
+    
+    @IBAction func rapPressed(_ sender: UIButton) {
+        if isOn {
+            playBeat(name: "still_dre")
+            isBeating = true
+        }
+    }
+    
+    @IBAction func djPressed(_ sender: UIButton) {
+        if isOn {
+            playBeat(name: "pop_beats")
+            isBeating = true
+        }
+    }
+    
+    @IBAction func quangPressed(_ sender: UIButton) {
+        if isOn {
+            playBeat(name: "country_roads")
+            isBeating = true
+        }
+    }
+    
 }
 
 
 extension MicVC: AVAudioRecorderDelegate {
+    func playBeat(name: String) {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else { return }
+        do {
+            print("hi")
+            beatPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            beatPlayer?.play()
+            beatPlayer?.volume = 0.1
+        } catch {
+            print("\(error)")
+        }
+    }
+    
     @objc func playAudio() {
-        print("Play")
+//        print("Play")
         
         let str = audioQueue.dequeue()
         let url = MicVC.getAudioURL(urlStr: str!)
@@ -124,7 +164,7 @@ extension MicVC: AVAudioRecorderDelegate {
         do {
             globalPlayer = try AVAudioPlayer(contentsOf: url)
             globalPlayer?.play()
-            print("Playing")
+//            print("Playing")
             do {
                 try FileManager.default.removeItem(at: url)
             } catch {
@@ -132,7 +172,7 @@ extension MicVC: AVAudioRecorderDelegate {
             }
             
         } catch {
-            print("Error with player")
+//            print("Error with player")
             let ac = UIAlertController(title: "Playback failed", message: "There was a problem", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
 //            present(ac, animated: true)
@@ -141,7 +181,7 @@ extension MicVC: AVAudioRecorderDelegate {
     }
     
     @objc func recordAudio() {
-        print("Record")
+//        print("Record")
         
         if let rec = recorder {
             recorder!.stop()
@@ -154,9 +194,9 @@ extension MicVC: AVAudioRecorderDelegate {
         
         self.audioQueue.enqueue(urlStr)
         self.url_counter += 1
-        audioQueue.show()
+//        audioQueue.show()
         do {
-            print(urlStr)
+//            print(urlStr)
             self.recorder = try AVAudioRecorder(url: audioURL, settings: settings)
             self.recorder?.delegate = self
             self.recorder?.prepareToRecord()
@@ -174,7 +214,7 @@ extension MicVC: AVAudioRecorderDelegate {
         url_counter = 0
         
         if success {
-            print("Finished Recording")
+//            print("Finished Recording")
         } else {
             let ac = UIAlertController(title: "Record failed", message: "There was a problem recording your audio; please try again.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
