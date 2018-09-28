@@ -25,7 +25,7 @@ class MicVC: UIViewController {
     var audioQueue: AQ<String> = AQ<String>()
     var recordTimer = Timer()
     var playTimer = Timer()
-    let delay = 0.5
+    let delay = 0.2
     
     let settings = [
         AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
