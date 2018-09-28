@@ -23,7 +23,16 @@ class MicVC: UIViewController {
     var recorder: AVAudioRecorder?
     var session: AVAudioSession?
     var audioQueue: AQ<String> = AQ<String>()
-    var timer = Timer()
+    var recordTimer = Timer()
+    var playTimer = Timer()
+    let delay = 1.0
+    
+    let settings = [
+        AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+        AVSampleRateKey: 12000,
+        AVNumberOfChannelsKey: 1,
+        AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+    ]
 
     
     override func viewDidLoad() {
@@ -32,6 +41,26 @@ class MicVC: UIViewController {
         offButton.backgroundColor = .gray
         onButton.layer.cornerRadius = 10
         offButton.layer.cornerRadius = 10
+        
+        session = AVAudioSession.sharedInstance()
+
+        do {
+            try session?.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            try session?.setActive(true)
+            
+            session?.requestRecordPermission() { [unowned self] allowed in
+                DispatchQueue.main.async {
+                    if allowed {
+                        self.loadRecordingUI()
+                    } else {
+                        self.loadFailUI()
+                    }
+                }
+            }
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
         
         print("View Did Load")
     }
@@ -42,15 +71,8 @@ class MicVC: UIViewController {
             isOn = true
             onButton.backgroundColor = .white
             offButton.backgroundColor = onColor
-            
-//            let queue = DispatchQueue(label: "RecordAndPlay", qos: .default, attributes: .concurrent)
-//            queue.async {
-                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.recordAudio), userInfo: nil, repeats: true)
-//                self.timer.fire()
-//            }
-            queue.async {
-                self.startPlaying()
-            }
+            recordTimer = Timer.scheduledTimer(timeInterval: self.delay, target: self, selector: #selector(self.recordAudio), userInfo: nil, repeats: true)
+            playTimer = Timer.scheduledTimer(timeInterval: self.delay, target: self, selector: #selector(self.playAudio), userInfo: nil, repeats: true)
         }
     }
     
@@ -58,8 +80,13 @@ class MicVC: UIViewController {
         if isOn {
             print("Off")
             isOn = false
+            
             onButton.backgroundColor = .orange
             offButton.backgroundColor = .gray
+            
+            recordTimer.invalidate()
+            playTimer.invalidate()
+            
             finishRecording(success: true)
 //            globalPlayer?.stop()
         }
@@ -86,23 +113,49 @@ class MicVC: UIViewController {
 
 
 extension MicVC: AVAudioRecorderDelegate {
-    func startPlaying() {
+    @objc func playAudio() {
         print("Play")
+        
+        
     }
     
     @objc func recordAudio() {
         print("Record")
+        
+        if let rec = recorder {
+            recorder!.stop()
+        }
+        
+        let urlStr = String(self.url_counter)
+        let audioURL = MicVC.getAudioURL(urlStr: urlStr+".m4a")
+//        print(audioURL.absoluteString)
+        
+        
+        self.audioQueue.enqueue(urlStr)
+        self.url_counter += 1
+        audioQueue.show()
+        do {
+            print(urlStr)
+            self.recorder = try AVAudioRecorder(url: audioURL, settings: settings)
+            self.recorder?.delegate = self
+            self.recorder?.prepareToRecord()
+            self.recorder?.record()
+        } catch {
+            self.isOn = false
+            self.finishRecording(success: false)
+        }
         
     }
     
     func finishRecording(success: Bool) {
         recorder?.stop()
         recorder = nil
+        url_counter = 0
         
         if success {
-            print("switch off")
+            print("Finished Recording")
         } else {
-            let ac = UIAlertController(title: "Record failed", message: "There was a problem recording your whistle; please try again.", preferredStyle: .alert)
+            let ac = UIAlertController(title: "Record failed", message: "There was a problem recording your audio; please try again.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
         }
